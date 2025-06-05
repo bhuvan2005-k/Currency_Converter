@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Currency Converter</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            background: url('https://static.vecteezy.com/system/resources/thumbnails/037/760/817/small_2x/ai-generated-of-assorted-international-currencies-generative-ai-photo.jpg');
+            background-color: rgba(255, 255, 255, 0.3);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            max-width: 450px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        button[type="submit"] {
+            background-color: #007BFF;
+        }
+
+        button[type="reset"] {
+            background-color: #dc3545;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            text-align: center;
+            color: green;
+        }
+
+        .error {
+            margin-top: 20px;
+            text-align: center;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 style="font-size: 27px">💱 Online Currency Converter</h2>
+        <form method="post" onreset="clearMessages()">
+            <label>Amount:</label>
+            <input type="number" name="amount" required step="any">
+
+            <label>From Currency:</label>
+            <select name="base_currency">
+                {% for c in currencies %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <label>To Currency:</label>
+            <select name="target_currency">
+                {% for c in currencies %}
+                    <option value="{{ c }}">{{ c }}</option>
+                {% endfor %}
+            </select>
+
+            <div class="button-group">
+                <button type="submit">Convert</button>
+                <button type="reset">Clear</button>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="result" id="result">{{ result }}</div>
+        {% endif %}
+        {% if error %}
+            <div class="error" id="error">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <script>
+        function clearMessages() {
+            const result = document.getElementById("result");
+            const error = document.getElementById("error");
+            if (result) result.innerHTML = "";
+            if (error) error.innerHTML = "";
+        }
+    </script>
+</body>
+</html>
